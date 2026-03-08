@@ -1,5 +1,6 @@
 from collections import defaultdict
 import time
+import os
 
 scan_tracker = defaultdict(list)
 
@@ -20,4 +21,6 @@ def detect_port_scan(packet):
 
         if len(unique_ports) > 3:
             print(f"[ALERT] Possible port scan from {src}")
+            os.system(f"sudo iptables -A INPUT -s {src} -j DROP")
+            print(f"[DEFENSE] Blocked IP {src}")
 
