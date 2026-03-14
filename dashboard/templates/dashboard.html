@@ -53,6 +53,7 @@ font-weight:bold;
 <tr>
 <th>Time</th>
 <th>Attacker IP</th>
+<th>country</th>
 <th>Event</th>
 </tr>
 
@@ -60,6 +61,7 @@ font-weight:bold;
 <tr>
 <td>{{ a.time }}</td>
 <td>{{ a.attacker_ip }}</td>
+<td>{{ a.country }}</td>
 <td class="alert">{{ a.event }}</td>
 </tr>
 {% endfor %}

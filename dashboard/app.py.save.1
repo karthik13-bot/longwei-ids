@@ -1,12 +1,11 @@
 from flask import Flask, render_template
 import json
 from intelligence.ip_info import get_ip_info
-
 app = Flask(__name__)
-
 
 @app.route("/")
 def home():
+
     alerts = []
 
     try:
@@ -15,12 +14,6 @@ def home():
                 alerts.append(json.loads(line))
     except:
         pass
-
-    for alert in alerts:
-        info = get_ip_info(alert["attacker_ip"])
-        alert["country"] = info["country"]
-
-    count = len(alerts)
 
     if count < 5:
         threat = "LOW"
@@ -35,7 +28,6 @@ def home():
         count=count,
         threat=threat
     )
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
