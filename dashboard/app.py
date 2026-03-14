@@ -1,29 +1,35 @@
-from flask import Flask
+from flask import Flask, render_template
 import json
 
 app = Flask(__name__)
 
-LOG_FILE = "logs/alerts.log"
-
 @app.route("/")
-def index():
-    attacks = []
+def home():
+
+    alerts = []
 
     try:
-        with open(LOG_FILE, "r") as f:
+        with open("logs/alerts.log") as f:
             for line in f:
-                attacks.append(json.loads(line))
+                alerts.append(json.loads(line))
     except:
         pass
 
-    total_attacks = len(attacks)
-    unique_ips = len(set(a["attacker_ip"] for a in attacks))
+    count = len(alerts)
 
-    return {
-        "total_attacks": total_attacks,
-        "unique_attackers": unique_ips,
-        "attacks": attacks
-    }
+    if count < 5:
+        threat = "LOW"
+    elif count < 15:
+        threat = "MEDIUM"
+    else:
+        threat = "CRITICAL"
+
+    return render_template(
+        "dashboard.html",
+        alerts=alerts[::-1],
+        count=count,
+        threat=threat
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

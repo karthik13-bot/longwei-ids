@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LONGWEI IDS</title>
+
+<style>
+
+body{
+background-image:url("/static/dragon.jpg");
+background-size:cover;
+background-position:center;
+font-family:Arial;
+color:white;
+}
+
+h1{
+text-align:center;
+font-size:40px;
+text-shadow:0 0 15px red;
+}
+
+table{
+margin:auto;
+border-collapse:collapse;
+background:rgba(0,0,0,0.75);
+}
+
+th,td{
+padding:10px 20px;
+border:1px solid red;
+}
+
+th{
+background:red;
+}
+
+.alert{
+color:red;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🐉 LONGWEI IDS DASHBOARD</h1>
+
+<h2 style="text-align:center;">Threat Level: {{ threat }}</h2>
+<h3 style="text-align:center;">Total Alerts: {{ count }}</h3>
+
+<table>
+<tr>
+<th>Time</th>
+<th>Attacker IP</th>
+<th>Event</th>
+</tr>
+
+{% for a in alerts %}
+<tr>
+<td>{{ a.time }}</td>
+<td>{{ a.attacker_ip }}</td>
+<td class="alert">{{ a.event }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

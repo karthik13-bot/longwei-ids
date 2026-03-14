@@ -1,5 +1,6 @@
 from scapy.all import sniff, IP
 from detection.port_scan_detector import detect_port_scan
+from detection.bruteforce_detector import detect_bruteforce
 
 def packet_callback(packet):
     if packet.haslayer(IP):
@@ -9,6 +10,7 @@ def packet_callback(packet):
         print(f"[PACKET] {src} -> {dst}")
 
         detect_port_scan(packet)
+        detect_bruteforce(packet)
 
 def start_sniffing():
     print("LONGWEI IDS Packet Collector Started...")
