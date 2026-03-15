@@ -15,15 +15,25 @@ def home():
     alerts = []
 
     try:
-        with open("logs/alerts.log") as f:
-            for line in f:
-                alerts.append(json.loads(line))
+       with open("logs/alerts.log") as f:
+         for line in f:
+            alerts.append(json.loads(line))
     except:
-        pass
+       pass
 
     for alert in alerts:
         info = get_ip_info(alert["attacker_ip"])
         alert["country"] = info["country"]
+        countries = []
+
+        for alert in alerts:
+            country = alert.get("country", "Unknown")
+            countries.append(country)
+
+    country_counts = Counter(countries)
+
+    country_labels = list(country_counts.keys())
+    country_values = list(country_counts.values())
 
     hours = []
     for alert in alerts:
@@ -50,7 +60,10 @@ def home():
         count=count,
         threat=threat,
         labels=labels,
-        values=values
+        values=values,
+        country_labels=country_labels,
+        country_values=country_values
+
     )
 
 app.run(host="0.0.0.0", port=5000)

@@ -70,7 +70,25 @@ new Chart(ctx, {
     }
 });
 </script>
+<h2>Top Attacking Countries</h2>
 
+<canvas id="countryChart"></canvas>
+
+<script>
+const ctx2 = document.getElementById('countryChart');
+
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: {{ country_labels|tojson }},
+        datasets: [{
+            label: 'Attacks by Country',
+            data: {{ country_values|tojson }},
+            backgroundColor: 'rgba(255,99,132,0.6)'
+        }]
+    }
+});
+</script>
 <table>
 <tr>
 <th>Time</th>
