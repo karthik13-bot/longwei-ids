@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>LONGWEI IDS</title>
 
 <style>
@@ -48,6 +49,27 @@ font-weight:bold;
 
 <h2 style="text-align:center;">Threat Level: {{ threat }}</h2>
 <h3 style="text-align:center;">Total Alerts: {{ count }}</h3>
+<h2>Attack Activity (Last 24 Hours)</h2>
+
+<canvas id="attackChart"></canvas>
+
+<script>
+const ctx = document.getElementById('attackChart');
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{ labels|tojson }},
+        datasets: [{
+            label: 'Attacks',
+            data: {{ values|tojson }},
+            borderColor: 'red',
+            backgroundColor: 'rgba(255,0,0,0.2)',
+            tension: 0.3
+        }]
+    }
+});
+</script>
 
 <table>
 <tr>
