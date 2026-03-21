@@ -89,6 +89,22 @@ new Chart(ctx2, {
     }
 });
 </script>
+<h2>Top Attacker IPs</h2>
+
+<table border="1">
+<tr>
+    <th>IP Address</th>
+    <th>Attack Count</th>
+</tr>
+
+{% for ip, count in top_ips %}
+<tr>
+    <td>{{ ip }}</td>
+    <td>{{ count }}</td>
+</tr>
+{% endfor %}
+
+</table>
 <table>
 <tr>
 <th>Time</th>
